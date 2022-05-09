@@ -1,8 +1,11 @@
 const validator = require('validator');
 const User = require('../models/user');
 const { getHttpResponseContent } = require('../services/response');
-const { appError, validationError } = require('../services/error');
-const { asyncHandleError } = require('../services/hof');
+const {
+  appError,
+  validationError,
+  asyncHandleError,
+} = require('../services/error');
 const {
   getEncryptedPassword,
   getJWT,

@@ -1,7 +1,6 @@
 const Post = require('../models/post');
 const { getHttpResponseContent } = require('../services/response');
-const { validationError } = require('../services/error');
-const { asyncHandleError } = require('../services/hof');
+const { validationError, asyncHandleError } = require('../services/error');
 
 const post = {
   // 取得貼文
