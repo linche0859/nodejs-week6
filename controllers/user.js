@@ -37,7 +37,10 @@ const user = {
       );
 
     const exist = await User.findOne({ email });
-    if (exist) return next(validationError(400, 'email', '此 Email 已被註冊'));
+    if (exist)
+      return next(
+        validationError(400, 'email', '帳號已被註冊，請替換新的 Email！')
+      );
 
     const hash = await getEncryptedPassword(password);
     const user = await User.create({ name, email, password: hash });
