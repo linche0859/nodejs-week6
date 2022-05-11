@@ -18,7 +18,6 @@
     }
   ],
   "schemes": [
-    "http",
     "https"
   ],
   "securityDefinitions": {
@@ -32,126 +31,7 @@
   "consumes": [],
   "produces": [],
   "paths": {
-    "/posts/": {
-      "get": {
-        "tags": [
-          "Posts"
-        ],
-        "summary": "取得貼文",
-        "description": "",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "JSON Web Token",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "Authorization": {
-                  "type": "string",
-                  "example": ""
-                }
-              },
-              "required": [
-                "Authorization"
-              ]
-            }
-          },
-          {
-            "name": "q",
-            "in": "query",
-            "description": "關鍵字",
-            "type": "string"
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "排序方式，desc 為新至舊，asc 為舊至新",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "成功取得貼文",
-            "schema": {
-              "$ref": "#/definitions/Posts"
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "Posts"
-        ],
-        "summary": "新增貼文",
-        "description": "",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "JSON Web Token",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "Authorization": {
-                  "type": "string",
-                  "example": ""
-                }
-              },
-              "required": [
-                "Authorization"
-              ]
-            }
-          },
-          {
-            "name": "parameter_name",
-            "in": "body",
-            "description": "貼文資料",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "content": {
-                  "type": "string",
-                  "example": "貼文內容"
-                },
-                "image": {
-                  "type": "string",
-                  "example": "貼文圖片連結"
-                }
-              },
-              "required": [
-                "content"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "新增貼文成功",
-            "schema": {
-              "$ref": "#/definitions/Posts"
-            }
-          },
-          "400": {
-            "description": "新增貼文失敗",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/users/me": {
+    "/user/me": {
       "get": {
         "tags": [
           "Users"
@@ -207,7 +87,7 @@
         ]
       }
     },
-    "/users/sign_up": {
+    "/user/sign_up": {
       "post": {
         "tags": [
           "Users"
@@ -218,7 +98,7 @@
           {
             "name": "parameter_name",
             "in": "body",
-            "description": "會員資料",
+            "description": "註冊資料",
             "schema": {
               "type": "object",
               "properties": {
@@ -232,7 +112,7 @@
                 },
                 "password": {
                   "type": "string",
-                  "example": "a123456"
+                  "example": "a1234567"
                 }
               },
               "required": [
@@ -244,7 +124,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "註冊會員成功",
             "schema": {
               "type": "object",
@@ -268,7 +148,7 @@
         }
       }
     },
-    "/users/sign_in": {
+    "/user/sign_in": {
       "post": {
         "tags": [
           "Users"
@@ -279,7 +159,7 @@
           {
             "name": "parameter_name",
             "in": "body",
-            "description": "會員資料",
+            "description": "登入資料",
             "schema": {
               "type": "object",
               "properties": {
@@ -289,7 +169,7 @@
                 },
                 "password": {
                   "type": "string",
-                  "example": "a123456"
+                  "example": "a1234567"
                 }
               },
               "required": [
@@ -300,7 +180,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "登入會員成功",
             "schema": {
               "type": "object",
@@ -322,6 +202,127 @@
             }
           }
         }
+      }
+    },
+    "/posts": {
+      "get": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "取得貼文",
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "JSON Web Token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Authorization": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "Authorization"
+              ]
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "description": "關鍵字",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序方式，desc 為新至舊，asc 為舊至新",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功取得貼文",
+            "schema": {
+              "$ref": "#/definitions/Posts"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/post": {
+      "post": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "新增貼文",
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "JSON Web Token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Authorization": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "Authorization"
+              ]
+            }
+          },
+          {
+            "name": "parameter_name",
+            "in": "body",
+            "description": "貼文資料",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string",
+                  "example": "貼文內容"
+                },
+                "image": {
+                  "type": "string",
+                  "example": "貼文圖片連結"
+                }
+              },
+              "required": [
+                "content"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "新增貼文成功",
+            "schema": {
+              "$ref": "#/definitions/Posts"
+            }
+          },
+          "400": {
+            "description": "新增貼文失敗",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       }
     }
   },
