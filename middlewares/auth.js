@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const { appError, asyncHandleError } = require('../services/error');
 const { getDecryptedJWT } = require('../services/auth');
+const { errorMsg } = require('../services/enum');
 
 const auth = asyncHandleError(async (req, res, next) => {
   const {
@@ -12,10 +13,10 @@ const auth = asyncHandleError(async (req, res, next) => {
   }
 
   if (!token) {
-    return next(appError(401, '您尚未登入'));
+    return next(appError(401, errorMsg.auth));
   }
   const decryptedData = getDecryptedJWT(token);
-  if (!decryptedData) return next(appError(401, '您尚未登入'));
+  if (!decryptedData) return next(appError(401, errorMsg.auth));
 
   const user = await User.findById(decryptedData.id);
   req.user = user;

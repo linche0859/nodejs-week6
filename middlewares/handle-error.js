@@ -1,9 +1,12 @@
+const { errorMsg } = require('../services/enum');
+
 /**
  * 取得欄位驗證的錯誤
  * @param {object} err Error instance
  * @returns {object}
  */
 const getValidationError = (err) => {
+  if (typeof err.errors !== 'object') return err.message;
   return Object.entries(err.errors).reduce((acc, cur) => {
     const [field, value] = cur;
     acc[field] = value.message;
@@ -44,18 +47,28 @@ const handleProdError = (err, res) => {
   }
   res.status(500).json({
     status: 'error',
-    message: '系統錯誤，請聯絡系統管理員',
+    message: errorMsg.app,
   });
 };
 
 const handleError = (err, req, res, next) => {
+  const isJsonWebTokenError = err.name === 'JsonWebTokenError';
   const isValidationError = err.name === 'ValidationError';
+  const isParseError = err.type === 'entity.parse.failed';
   err.statusCode = err.statusCode || 500;
 
+  // jwt error
+  if (isJsonWebTokenError) {
+    err.statusCode = 401;
+    err.message = errorMsg.auth;
+    err.isOperational = true;
+  }
   // validation error
-  if (isValidationError) {
+  else if (isValidationError || isParseError) {
     err.statusCode = 400;
-    err.message = err.message || '資料欄位未填寫正確，請重新輸入';
+    err.message = isParseError
+      ? errorMsg.validation
+      : err.message || errorMsg.validation;
     err.isValidationError = true;
     err.isOperational = true;
   }
