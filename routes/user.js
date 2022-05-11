@@ -3,7 +3,7 @@ const router = express.Router();
 const UserController = require('../controllers/user');
 const auth = require('../middlewares/auth');
 
-router.get('/me', auth, (req, res, next) =>
+router.get('/user/me', auth, (req, res, next) =>
   /**
    * #swagger.tags = ['Users']
    * #swagger.summary = '取得會員資訊'
@@ -34,7 +34,7 @@ router.get('/me', auth, (req, res, next) =>
   */
   UserController.me(req, res, next)
 );
-router.post('/sign_up', (req, res, next) =>
+router.post('/user/sign_up', (req, res, next) =>
   /**
    * #swagger.tags = ['Users']
    * #swagger.summary = '註冊會員'
@@ -42,16 +42,16 @@ router.post('/sign_up', (req, res, next) =>
   /**
     #swagger.parameters['parameter_name'] = {
       in: 'body',
-      description: '會員資料',
+      description: '註冊資料',
       schema: {
         $name: '暱稱',
         $email: 'test@gmail.com',
-        $password: 'a123456',
+        $password: 'a1234567',
       }
     }
    */
   /**
-    #swagger.responses[200] = {
+    #swagger.responses[201] = {
       description: '註冊會員成功',
       schema: {
         token: 'token',
@@ -64,7 +64,7 @@ router.post('/sign_up', (req, res, next) =>
   */
   UserController.signUp(req, res, next)
 );
-router.post('/sign_in', (req, res, next) =>
+router.post('/user/sign_in', (req, res, next) =>
   /**
    * #swagger.tags = ['Users']
    * #swagger.summary = '登入會員'
@@ -72,15 +72,15 @@ router.post('/sign_in', (req, res, next) =>
   /**
     #swagger.parameters['parameter_name'] = {
       in: 'body',
-      description: '會員資料',
+      description: '登入資料',
       schema: {
         $email: 'test@gmail.com',
-        $password: 'a123456',
+        $password: 'a1234567',
       }
     }
    */
   /**
-    #swagger.responses[200] = {
+    #swagger.responses[201] = {
       description: '登入會員成功',
       schema: {
         token: 'token',

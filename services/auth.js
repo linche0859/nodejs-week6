@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 
 /**
  * 取得 JSON Web Token
@@ -42,9 +43,17 @@ const isValidPassword = async (password, comparedPassword) => {
   return valid;
 };
 
+/**
+ * Mongoose 的編號是否為有效
+ * @param {string} id 編號
+ * @returns {boolean}
+ */
+const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
+
 module.exports = {
   getJWT,
   getDecryptedJWT,
   getEncryptedPassword,
   isValidPassword,
+  isValidObjectId,
 };

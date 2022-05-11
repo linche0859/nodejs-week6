@@ -12,8 +12,8 @@ require('dotenv').config();
 require('./connections');
 require('./services/process');
 
-const postRouter = require('./routes/post');
 const userRouter = require('./routes/user');
+const postRouter = require('./routes/post');
 
 const app = express();
 
@@ -33,8 +33,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(`/posts`, postRouter);
-app.use(`/users`, userRouter);
+app.use(userRouter);
+app.use(postRouter);
 app.use(`/api/doc`, swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 // catch 404 and forward to error handler

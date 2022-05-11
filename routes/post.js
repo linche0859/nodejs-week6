@@ -3,7 +3,7 @@ const router = express.Router();
 const PostController = require('../controllers/post');
 const auth = require('../middlewares/auth');
 
-router.get('/', auth, (req, res) =>
+router.get('/posts', auth, (req, res) =>
   /**
    * #swagger.tags = ['Posts']
    * #swagger.summary = '取得貼文'
@@ -38,7 +38,7 @@ router.get('/', auth, (req, res) =>
    */
   PostController.getPosts(req, res)
 );
-router.post('/', auth, (req, res, next) =>
+router.post('/post', auth, (req, res, next) =>
   /**
    * #swagger.tags = ['Posts']
    * #swagger.summary = '新增貼文'
@@ -64,7 +64,7 @@ router.post('/', auth, (req, res, next) =>
     }
   */
   /**
-    #swagger.responses[200] = {
+    #swagger.responses[201] = {
       description: '新增貼文成功',
       schema: { $ref: '#/definitions/Posts' }
     }
