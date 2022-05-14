@@ -31,7 +31,7 @@
   "consumes": [],
   "produces": [],
   "paths": {
-    "/user/me": {
+    "/user/profile": {
       "get": {
         "tags": [
           "Users"
@@ -85,6 +85,68 @@
             "apiKeyAuth": []
           }
         ]
+      },
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "更新會員資訊",
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "JSON Web Token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Authorization": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "Authorization"
+              ]
+            }
+          },
+          {
+            "name": "parameter_name",
+            "in": "body",
+            "description": "更新資料",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "兩金勘吉"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "female"
+                }
+              },
+              "required": [
+                "name",
+                "gender"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "更新會員資訊成功",
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          },
+          "400": {
+            "description": "更新會員資訊失敗",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
       }
     },
     "/user/sign_up": {
@@ -197,6 +259,79 @@
           },
           "400": {
             "description": "登入會員失敗",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/user/password": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "更新會員密碼",
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "JSON Web Token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Authorization": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "Authorization"
+              ]
+            }
+          },
+          {
+            "name": "parameter_name",
+            "in": "body",
+            "description": "更新資料",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "password": {
+                  "type": "string",
+                  "example": "a1234567"
+                },
+                "confirm_password": {
+                  "type": "string",
+                  "example": "a1234567"
+                }
+              },
+              "required": [
+                "password",
+                "confirm_password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "更新會員密碼成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "example": "更新密碼成功"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "更新會員密碼失敗",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -377,8 +512,8 @@
           "example": "https://..."
         },
         "gender": {
-          "type": "boolean",
-          "example": true
+          "type": "string",
+          "example": "male"
         }
       }
     },

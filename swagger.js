@@ -33,7 +33,7 @@ const doc = {
       _id: '123456789',
       name: '會員暱稱',
       avatar: 'https://...',
-      gender: true,
+      gender: 'male',
     },
     Error: {
       message: {

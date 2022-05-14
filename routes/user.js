@@ -3,7 +3,7 @@ const router = express.Router();
 const UserController = require('../controllers/user');
 const auth = require('../middlewares/auth');
 
-router.get('/user/me', auth, (req, res, next) =>
+router.get('/user/profile', auth, (req, res, next) =>
   /**
    * #swagger.tags = ['Users']
    * #swagger.summary = '取得會員資訊'
@@ -32,7 +32,7 @@ router.get('/user/me', auth, (req, res, next) =>
       }
     }
   */
-  UserController.me(req, res, next)
+  UserController.profile(req, res, next)
 );
 router.post('/user/sign_up', (req, res, next) =>
   /**
@@ -92,6 +92,80 @@ router.post('/user/sign_in', (req, res, next) =>
     }
   */
   UserController.signIn(req, res, next)
+);
+router.patch('/user/profile', auth, (req, res, next) =>
+  /**
+   * #swagger.tags = ['Users']
+   * #swagger.summary = '更新會員資訊'
+   */
+  /**
+    #swagger.parameters['Authorization'] = {
+      in: 'header',
+      description: 'JSON Web Token',
+      schema: {
+        $Authorization: '',
+      }
+    }
+   */
+  /**
+    #swagger.parameters['parameter_name'] = {
+      in: 'body',
+      description: '更新資料',
+      schema: {
+        $name: '兩金勘吉',
+        $gender: 'female',
+      }
+    }
+   */
+  /**
+    #swagger.responses[201] = {
+      description: '更新會員資訊成功',
+      schema: { $ref: '#/definitions/Users' }
+    }
+    #swagger.responses[400] = {
+      description: '更新會員資訊失敗',
+      schema: { $ref: '#/definitions/Error' }
+    }
+  */
+  UserController.updateProfile(req, res, next)
+);
+router.patch('/user/password', auth, (req, res, next) =>
+  /**
+   * #swagger.tags = ['Users']
+   * #swagger.summary = '更新會員密碼'
+   */
+  /**
+    #swagger.parameters['Authorization'] = {
+      in: 'header',
+      description: 'JSON Web Token',
+      schema: {
+        $Authorization: '',
+      }
+    }
+   */
+  /**
+    #swagger.parameters['parameter_name'] = {
+      in: 'body',
+      description: '更新資料',
+      schema: {
+        $password: 'a1234567',
+        $confirm_password: 'a1234567',
+      }
+    }
+   */
+  /**
+    #swagger.responses[201] = {
+      description: '更新會員密碼成功',
+      schema: {
+        data: '更新密碼成功'
+      }
+    }
+    #swagger.responses[400] = {
+      description: '更新會員密碼失敗',
+      schema: { $ref: '#/definitions/Error' }
+    }
+  */
+  UserController.updatePassword(req, res, next)
 );
 
 module.exports = router;
