@@ -1,5 +1,5 @@
 const Post = require('../models/post');
-const Message = require('../models/Message');
+const Message = require('../models/message');
 const { getHttpResponseContent } = require('../services/response');
 const {
   appError,
