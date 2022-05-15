@@ -6,11 +6,11 @@ const {
   validationError,
   asyncHandleError,
 } = require('../services/error');
+const { getJWT } = require('../services/auth');
 const {
   getEncryptedPassword,
-  getJWT,
   isValidPassword,
-} = require('../services/auth');
+} = require('../services/validation');
 
 const user = {
   // 註冊會員

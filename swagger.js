@@ -27,6 +27,19 @@ const doc = {
         name: '小明',
         avatar: 'https://....',
       },
+      likes: ['123456789'],
+      messages: [
+        {
+          _id: '123456789',
+          user: {
+            _id: '123456789',
+            name: '會員暱稱',
+            avatar: 'https://...',
+          },
+          content: '一則留言',
+          createdAt: '2022-01-01T00:00:00.000Z',
+        },
+      ],
       createdAt: '2022-05-03T09:00:00.226Z',
     },
     Users: {
@@ -34,6 +47,16 @@ const doc = {
       name: '會員暱稱',
       avatar: 'https://...',
       gender: 'male',
+    },
+    Messages: {
+      _id: '123456789',
+      user: {
+        _id: '123456789',
+        name: '會員暱稱',
+        avatar: 'https://...',
+      },
+      content: '一則留言',
+      createdAt: '2022-01-01T00:00:00.000Z',
     },
     Error: {
       message: {

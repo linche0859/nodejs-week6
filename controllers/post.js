@@ -1,18 +1,39 @@
 const Post = require('../models/post');
+const Message = require('../models/Message');
 const { getHttpResponseContent } = require('../services/response');
-const { validationError, asyncHandleError } = require('../services/error');
+const {
+  appError,
+  validationError,
+  asyncHandleError,
+} = require('../services/error');
+const { isValidObjectId } = require('../services/validation');
 
 const post = {
   // 取得貼文
-  getPosts: asyncHandleError(async (req, res) => {
+  getPosts: asyncHandleError(async (req, res, next) => {
     const {
       query: { q, sort = 'desc' },
     } = req;
     const filter = q ? { content: new RegExp(q, 'i') } : {};
     const posts = await Post.find(filter)
       .populate({ path: 'user', select: 'name avatar' })
+      .populate({
+        path: 'messages',
+        populate: { path: 'user', select: 'name avatar' },
+      })
       .sort({
         createdAt: sort === 'desc' ? -1 : 1,
+      });
+    res.status(200).json(getHttpResponseContent(posts));
+  }),
+  // 取得按讚的貼文
+  getPostsLike: asyncHandleError(async (req, res, next) => {
+    const { user } = req;
+    const posts = await Post.find({ likes: { $in: user._id } })
+      .populate({ path: 'user', select: 'name avatar' })
+      .select('-messages')
+      .sort({
+        createdAt: -1,
       });
     res.status(200).json(getHttpResponseContent(posts));
   }),
@@ -30,6 +51,73 @@ const post = {
     const post = await Post.create({ content, image, user: user._id });
 
     res.status(201).json(getHttpResponseContent(post));
+  }),
+  // 新增貼文留言
+  postMessage: asyncHandleError(async (req, res, next) => {
+    const {
+      user,
+      params: { postId },
+      body: { content },
+    } = req;
+    if (!(postId && isValidObjectId(postId)))
+      return next(appError(400, '請傳入指定的貼文'));
+    if (!content) return next(appError(400, '請填寫留言內容'));
+
+    const existedPost = await Post.findById(postId);
+    if (!existedPost) return next(appError(400, '尚未發布貼文'));
+
+    const message = await Message.create({ user: user._id, content });
+    await Post.findByIdAndUpdate(postId, {
+      messages: [...existedPost.messages, message._id],
+    });
+
+    const currentMessage = await Message.findById(message._id).populate({
+      path: 'user',
+      select: 'name avatar',
+    });
+    res.status(201).json(getHttpResponseContent(currentMessage));
+  }),
+  // 按讚貼文
+  postLike: asyncHandleError(async (req, res, next) => {
+    const {
+      user,
+      params: { postId },
+    } = req;
+    if (!(postId && isValidObjectId(postId)))
+      return next(appError(400, '請傳入指定的貼文'));
+
+    const existedPost = await Post.findById(postId);
+    if (!existedPost) return next(appError(400, '尚未發布貼文'));
+    if (existedPost.likes.includes(user._id))
+      return next(appError(400, '已對該貼文按讚'));
+
+    await Post.findByIdAndUpdate(postId, {
+      $push: { likes: user._id },
+    });
+    const post = await Post.findById(postId)
+      .populate({ path: 'user', select: 'name avatar' })
+      .populate({
+        path: 'messages',
+        populate: { path: 'user', select: 'name avatar' },
+      });
+    res.status(201).json(getHttpResponseContent(post));
+  }),
+  // 移除貼文的按讚
+  deleteLike: asyncHandleError(async (req, res, next) => {
+    const {
+      user,
+      params: { postId },
+    } = req;
+    if (!(postId && isValidObjectId(postId)))
+      return next(appError(400, '請傳入指定的貼文'));
+
+    const existedPost = await Post.findById(postId);
+    if (!existedPost) return next(appError(400, '尚未發布貼文'));
+    if (!existedPost.likes.includes(user._id))
+      return next(appError(400, '尚未按讚貼文'));
+
+    await Post.findByIdAndUpdate(postId, { $pull: { likes: user._id } });
+    res.status(201).json(getHttpResponseContent('移除貼文的按讚成功'));
   }),
 };
 

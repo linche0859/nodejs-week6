@@ -3,7 +3,7 @@ const router = express.Router();
 const PostController = require('../controllers/post');
 const auth = require('../middlewares/auth');
 
-router.get('/posts', auth, (req, res) =>
+router.get('/posts', auth, (req, res, next) =>
   /**
    * #swagger.tags = ['Posts']
    * #swagger.summary = '取得貼文'
@@ -33,10 +33,35 @@ router.get('/posts', auth, (req, res) =>
   /**
     #swagger.responses[200] = {
       description: '成功取得貼文',
-      schema: { $ref: '#/definitions/Posts' }
+      schema: [{ $ref: '#/definitions/Posts' }]
     }
    */
-  PostController.getPosts(req, res)
+  PostController.getPosts(req, res, next)
+);
+router.get('/posts/like', auth, (req, res, next) =>
+  /**
+   * #swagger.tags = ['Posts']
+   * #swagger.summary = '取得按讚的貼文'
+   * #swagger.security = [{
+      "apiKeyAuth": [] 
+    }]
+   */
+  /**
+    #swagger.parameters['Authorization'] = {
+      in: 'header',
+      description: 'JSON Web Token',
+      schema: {
+        $Authorization: '',
+      }
+    }
+   */
+  /**
+    #swagger.responses[200] = {
+      description: '成功取得按讚的貼文',
+      schema: [{ $ref: '#/definitions/Posts' }]
+    }
+   */
+  PostController.getPostsLike(req, res, next)
 );
 router.post('/post', auth, (req, res, next) =>
   /**
@@ -74,6 +99,111 @@ router.post('/post', auth, (req, res, next) =>
     }
   */
   PostController.postOnePost(req, res, next)
+);
+router.post('/post/:postId/message', auth, (req, res, next) =>
+  /**
+   * #swagger.tags = ['Posts']
+   * #swagger.summary = '新增貼文留言'
+   * #swagger.security = [{
+      "apiKeyAuth": [] 
+    }]
+   */
+  /**
+    #swagger.parameters['Authorization'] = {
+      in: 'header',
+      description: 'JSON Web Token',
+      schema: {
+        $Authorization: '',
+      }
+    }
+    #swagger.parameters['postId'] = { 
+      description: '貼文編號',
+    }
+    #swagger.parameters['parameter_name'] = {
+      in: 'body',
+      description: '留言資料',
+      schema: {
+        $content: '貼文內容',
+      }
+    }
+  */
+  /**
+    #swagger.responses[201] = {
+      description: '新增貼文留言成功',
+      schema: { $ref: '#/definitions/Messages' }
+    }
+    #swagger.responses[400] = {
+      description: '新增貼文留言失敗',
+      schema: { $ref: '#/definitions/Error' }
+    }
+  */
+  PostController.postMessage(req, res, next)
+);
+router.post('/post/:postId/like', auth, (req, res, next) =>
+  /**
+   * #swagger.tags = ['Posts']
+   * #swagger.summary = '按讚貼文'
+   * #swagger.security = [{
+      "apiKeyAuth": [] 
+    }]
+   */
+  /**
+    #swagger.parameters['Authorization'] = {
+      in: 'header',
+      description: 'JSON Web Token',
+      schema: {
+        $Authorization: '',
+      }
+    }
+    #swagger.parameters['postId'] = { 
+      description: '貼文編號',
+    }
+  */
+  /**
+    #swagger.responses[201] = {
+      description: '按讚貼文成功',
+      schema: { $ref: '#/definitions/Posts' }
+    }
+    #swagger.responses[400] = {
+      description: '按讚貼文失敗',
+      schema: { $ref: '#/definitions/Error' }
+    }
+  */
+  PostController.postLike(req, res, next)
+);
+router.delete('/post/:postId/like', auth, (req, res, next) =>
+  /**
+   * #swagger.tags = ['Posts']
+   * #swagger.summary = '移除貼文的按讚'
+   * #swagger.security = [{
+      "apiKeyAuth": [] 
+    }]
+   */
+  /**
+    #swagger.parameters['Authorization'] = {
+      in: 'header',
+      description: 'JSON Web Token',
+      schema: {
+        $Authorization: '',
+      }
+    }
+    #swagger.parameters['postId'] = { 
+      description: '貼文編號',
+    }
+  */
+  /**
+    #swagger.responses[201] = {
+      description: '移除貼文的按讚成功',
+      schema: {
+        data: '移除貼文的按讚成功'
+      }
+    }
+    #swagger.responses[400] = {
+      description: '移除貼文的按讚失敗',
+      schema: { $ref: '#/definitions/Error' }
+    }
+  */
+  PostController.deleteLike(req, res, next)
 );
 
 module.exports = router;

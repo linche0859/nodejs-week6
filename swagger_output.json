@@ -381,7 +381,60 @@
           "200": {
             "description": "成功取得貼文",
             "schema": {
-              "$ref": "#/definitions/Posts"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Posts"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/like": {
+      "get": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "取得按讚的貼文",
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "JSON Web Token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Authorization": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "Authorization"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功取得按讚的貼文",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Posts"
+              },
+              "xml": {
+                "name": "main"
+              }
             }
           }
         },
@@ -459,6 +512,192 @@
           }
         ]
       }
+    },
+    "/post/{postId}/message": {
+      "post": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "新增貼文留言",
+        "description": "",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "貼文編號"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "JSON Web Token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Authorization": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "Authorization"
+              ]
+            }
+          },
+          {
+            "name": "parameter_name",
+            "in": "body",
+            "description": "留言資料",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string",
+                  "example": "貼文內容"
+                }
+              },
+              "required": [
+                "content"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "新增貼文留言成功",
+            "schema": {
+              "$ref": "#/definitions/Messages"
+            }
+          },
+          "400": {
+            "description": "新增貼文留言失敗",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/post/{postId}/like": {
+      "post": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "按讚貼文",
+        "description": "",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "貼文編號"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "JSON Web Token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Authorization": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "Authorization"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "按讚貼文成功",
+            "schema": {
+              "$ref": "#/definitions/Posts"
+            }
+          },
+          "400": {
+            "description": "按讚貼文失敗",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "移除貼文的按讚",
+        "description": "",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "貼文編號"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "JSON Web Token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Authorization": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "Authorization"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "移除貼文的按讚成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "example": "移除貼文的按讚成功"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "移除貼文的按讚失敗",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
     }
   },
   "definitions": {
@@ -490,6 +729,52 @@
             }
           }
         },
+        "likes": {
+          "type": "array",
+          "example": [
+            "123456789"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "messages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "example": "123456789"
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "example": "123456789"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "會員暱稱"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "example": "https://..."
+                  }
+                }
+              },
+              "content": {
+                "type": "string",
+                "example": "一則留言"
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2022-01-01T00:00:00.000Z"
+              }
+            }
+          }
+        },
         "createdAt": {
           "type": "string",
           "example": "2022-05-03T09:00:00.226Z"
@@ -514,6 +799,40 @@
         "gender": {
           "type": "string",
           "example": "male"
+        }
+      }
+    },
+    "Messages": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "123456789"
+        },
+        "user": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "123456789"
+            },
+            "name": {
+              "type": "string",
+              "example": "會員暱稱"
+            },
+            "avatar": {
+              "type": "string",
+              "example": "https://..."
+            }
+          }
+        },
+        "content": {
+          "type": "string",
+          "example": "一則留言"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2022-01-01T00:00:00.000Z"
         }
       }
     },

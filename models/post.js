@@ -12,6 +12,8 @@ const schema = new Schema(
       default: '',
     },
     user: { type: Schema.Types.ObjectId, ref: 'User' },
+    likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    messages: [{ type: Schema.Types.ObjectId, ref: 'Message' }],
     createdAt: {
       type: Date,
       default: Date.now,
