@@ -239,6 +239,34 @@
 					"response": []
 				},
 				{
+					"name": "取得按讚的貼文",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{METAWALL_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/posts/like",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"posts",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "新增貼文",
 					"request": {
 						"auth": {
@@ -269,6 +297,120 @@
 							],
 							"path": [
 								"post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新增貼文留言",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{METAWALL_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\": \"我是阿兩\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/post/62809e3b84b3640ba08d0683/message",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"post",
+								"62809e3b84b3640ba08d0683",
+								"message"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "按讚貼文",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{METAWALL_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/post/62809e3b84b3640ba08d0683/like",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"post",
+								"62809e3b84b3640ba08d0683",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "移除貼文的按讚",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{METAWALL_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/post/62809e3b84b3640ba08d0683/like",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"post",
+								"62809e3b84b3640ba08d0683",
+								"like"
 							]
 						}
 					},
