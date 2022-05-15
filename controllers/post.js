@@ -121,13 +121,7 @@ const post = {
     await Post.findByIdAndUpdate(postId, {
       $push: { likes: user._id },
     });
-    const post = await Post.findById(postId)
-      .populate({ path: 'user', select: 'name avatar' })
-      .populate({
-        path: 'messages',
-        populate: { path: 'user', select: 'name avatar' },
-      });
-    res.status(201).json(getHttpResponseContent(post));
+    res.status(201).json(getHttpResponseContent('按讚貼文成功'));
   }),
   // 移除貼文的按讚
   deleteLike: asyncHandleError(async (req, res, next) => {

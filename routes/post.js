@@ -197,7 +197,7 @@ router.post('/post/:postId/like', auth, (req, res, next) =>
   /**
     #swagger.responses[201] = {
       description: '按讚貼文成功',
-      schema: { $ref: '#/definitions/Posts' }
+      schema: { $ref: '按讚貼文成功' }
     }
     #swagger.responses[400] = {
       description: '按讚貼文失敗',

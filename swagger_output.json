@@ -680,7 +680,7 @@
           "201": {
             "description": "按讚貼文成功",
             "schema": {
-              "$ref": "#/definitions/Posts"
+              "$ref": "按讚貼文成功"
             }
           },
           "400": {
