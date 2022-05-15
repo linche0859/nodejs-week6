@@ -19,7 +19,11 @@ const post = {
       .populate({ path: 'user', select: 'name avatar' })
       .populate({
         path: 'messages',
-        populate: { path: 'user', select: 'name avatar' },
+        populate: {
+          path: 'user',
+          select: 'name avatar',
+        },
+        options: { sort: { createdAt: -1 } },
       })
       .sort({
         createdAt: sort === 'desc' ? -1 : 1,
@@ -49,7 +53,11 @@ const post = {
       .populate({ path: 'user', select: 'name avatar' })
       .populate({
         path: 'messages',
-        populate: { path: 'user', select: 'name avatar' },
+        populate: {
+          path: 'user',
+          select: 'name avatar',
+        },
+        options: { sort: { createdAt: -1 } },
       })
       .sort({
         createdAt: sort === 'desc' ? -1 : 1,
