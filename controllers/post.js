@@ -27,13 +27,32 @@ const post = {
     res.status(200).json(getHttpResponseContent(posts));
   }),
   // 取得按讚的貼文
-  getPostsLike: asyncHandleError(async (req, res, next) => {
+  getLikePosts: asyncHandleError(async (req, res, next) => {
     const { user } = req;
     const posts = await Post.find({ likes: { $in: user._id } })
       .populate({ path: 'user', select: 'name avatar' })
       .select('-messages')
       .sort({
         createdAt: -1,
+      });
+    res.status(200).json(getHttpResponseContent(posts));
+  }),
+  // 取得個人的貼文
+  getUserPosts: asyncHandleError(async (req, res, next) => {
+    const {
+      user,
+      query: { q, sort = 'desc' },
+    } = req;
+    const filter = { user: user._id };
+    if (q) filter.content = new RegExp(q, 'i');
+    const posts = await Post.find(filter)
+      .populate({ path: 'user', select: 'name avatar' })
+      .populate({
+        path: 'messages',
+        populate: { path: 'user', select: 'name avatar' },
+      })
+      .sort({
+        createdAt: sort === 'desc' ? -1 : 1,
       });
     res.status(200).json(getHttpResponseContent(posts));
   }),

@@ -61,7 +61,42 @@ router.get('/posts/like', auth, (req, res, next) =>
       schema: [{ $ref: '#/definitions/Posts' }]
     }
    */
-  PostController.getPostsLike(req, res, next)
+  PostController.getLikePosts(req, res, next)
+);
+router.get('/posts/user', auth, (req, res, next) =>
+  /**
+   * #swagger.tags = ['Posts']
+   * #swagger.summary = '取得個人的貼文'
+   * #swagger.security = [{
+      "apiKeyAuth": [] 
+    }]
+   */
+  /**
+    #swagger.parameters['Authorization'] = {
+      in: 'header',
+      description: 'JSON Web Token',
+      schema: {
+        $Authorization: '',
+      }
+    }
+    #swagger.parameters['q'] = {
+      in: 'query',
+      description: '關鍵字',
+      type: 'string',
+    }
+    #swagger.parameters['sort'] = {
+      in: 'query',
+      description: '排序方式，desc 為新至舊，asc 為舊至新',
+      type: 'string',
+    }
+   */
+  /**
+    #swagger.responses[200] = {
+      description: '成功取得個人的貼文',
+      schema: [{ $ref: '#/definitions/Posts' }]
+    }
+   */
+  PostController.getUserPosts(req, res, next)
 );
 router.post('/post', auth, (req, res, next) =>
   /**
