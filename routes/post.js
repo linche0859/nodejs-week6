@@ -32,7 +32,7 @@ router.get('/posts', auth, (req, res, next) =>
    */
   /**
     #swagger.responses[200] = {
-      description: '成功取得貼文',
+      description: '取得貼文成功',
       schema: [{ $ref: '#/definitions/Posts' }]
     }
    */
@@ -57,7 +57,7 @@ router.get('/posts/like', auth, (req, res, next) =>
    */
   /**
     #swagger.responses[200] = {
-      description: '成功取得按讚的貼文',
+      description: '取得按讚的貼文成功',
       schema: [{ $ref: '#/definitions/Posts' }]
     }
    */
@@ -95,7 +95,7 @@ router.get('/posts/:userId', auth, (req, res, next) =>
    */
   /**
     #swagger.responses[200] = {
-      description: '成功取得個人的貼文',
+      description: '取得個人的貼文成功',
       schema: [{ $ref: '#/definitions/Posts' }]
     }
    */
@@ -200,7 +200,7 @@ router.post('/post/:postId/like', auth, (req, res, next) =>
   /**
     #swagger.responses[201] = {
       description: '按讚貼文成功',
-      schema: { $ref: '按讚貼文成功' }
+      schema: { data: '按讚貼文成功' }
     }
     #swagger.responses[400] = {
       description: '按讚貼文失敗',

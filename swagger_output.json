@@ -15,6 +15,10 @@
     {
       "name": "Users",
       "description": "會員相關"
+    },
+    {
+      "name": "Tracks",
+      "description": "追蹤相關"
     }
   ],
   "schemes": [
@@ -379,7 +383,7 @@
         ],
         "responses": {
           "200": {
-            "description": "成功取得貼文",
+            "description": "取得貼文成功",
             "schema": {
               "type": "array",
               "items": {
@@ -426,7 +430,7 @@
         ],
         "responses": {
           "200": {
-            "description": "成功取得按讚的貼文",
+            "description": "取得按讚的貼文成功",
             "schema": {
               "type": "array",
               "items": {
@@ -445,7 +449,7 @@
         ]
       }
     },
-    "/posts/user": {
+    "/posts/{userId}": {
       "get": {
         "tags": [
           "Posts"
@@ -453,6 +457,13 @@
         "summary": "取得個人的貼文",
         "description": "",
         "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "會員編號"
+          },
           {
             "name": "Authorization",
             "in": "header",
@@ -485,7 +496,7 @@
         ],
         "responses": {
           "200": {
-            "description": "成功取得個人的貼文",
+            "description": "取得個人的貼文成功",
             "schema": {
               "type": "array",
               "items": {
@@ -680,7 +691,16 @@
           "201": {
             "description": "按讚貼文成功",
             "schema": {
-              "$ref": "按讚貼文成功"
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "example": "按讚貼文成功"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
             }
           },
           "400": {
@@ -746,6 +766,177 @@
           },
           "400": {
             "description": "移除貼文的按讚失敗",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/tracks": {
+      "get": {
+        "tags": [
+          "Tracks"
+        ],
+        "summary": "取得追蹤名單",
+        "description": "",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "JSON Web Token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Authorization": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "Authorization"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "取得追蹤名單成功",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Tracks"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/track/{userId}": {
+      "post": {
+        "tags": [
+          "Tracks"
+        ],
+        "summary": "追蹤特定的會員",
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "會員編號"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "JSON Web Token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Authorization": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "Authorization"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "追蹤會員成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "example": "追蹤成功"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "追蹤失敗",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Tracks"
+        ],
+        "summary": "取消追蹤特定的會員",
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "會員編號"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "JSON Web Token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Authorization": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "Authorization"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "取消追蹤成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "example": "取消追蹤成功"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "取消追蹤失敗",
             "schema": {
               "$ref": "#/definitions/Error"
             }
@@ -888,6 +1079,36 @@
         "content": {
           "type": "string",
           "example": "一則留言"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2022-01-01T00:00:00.000Z"
+        }
+      }
+    },
+    "Tracks": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "123456789"
+        },
+        "tracking": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "example": "123456789"
+            },
+            "name": {
+              "type": "string",
+              "example": "會員暱稱"
+            },
+            "avatar": {
+              "type": "string",
+              "example": "https://..."
+            }
+          }
         },
         "createdAt": {
           "type": "string",

@@ -104,7 +104,7 @@ const user = {
         validationError(400, 'password', '密碼需至少 8 碼以上，並英數混合')
       );
     const hash = await getEncryptedPassword(password);
-    await User.findByIdAndUpdate(user._id, { password: hash });
+    await User.updateOne({ _id: user._id }, { password: hash });
     res.status(201).json(getHttpResponseContent('更新密碼成功'));
   }),
 };

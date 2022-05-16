@@ -17,6 +17,7 @@ const doc = {
   tags: [
     { name: 'Posts', description: '貼文相關' },
     { name: 'Users', description: '會員相關' },
+    { name: 'Tracks', description: '追蹤相關' },
   ],
   definitions: {
     Posts: {
@@ -56,6 +57,15 @@ const doc = {
         avatar: 'https://...',
       },
       content: '一則留言',
+      createdAt: '2022-01-01T00:00:00.000Z',
+    },
+    Tracks: {
+      _id: '123456789',
+      tracking: {
+        _id: '123456789',
+        name: '會員暱稱',
+        avatar: 'https://...',
+      },
       createdAt: '2022-01-01T00:00:00.000Z',
     },
     Error: {
