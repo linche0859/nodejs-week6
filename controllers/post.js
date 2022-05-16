@@ -44,10 +44,16 @@ const post = {
   // 取得個人的貼文
   getUserPosts: asyncHandleError(async (req, res, next) => {
     const {
-      user,
+      params: { userId },
       query: { q, sort = 'desc' },
     } = req;
-    const filter = { user: user._id };
+    if (!(userId && isValidObjectId(userId)))
+      return next(appError(400, '請傳入指定的會員'));
+
+    const existedUser = await User.findById(userId);
+    if (!existedUser) return next(appError(400, '尚未註冊為會員'));
+
+    const filter = { user: userId };
     if (q) filter.content = new RegExp(q, 'i');
     const posts = await Post.find(filter)
       .populate({ path: 'user', select: 'name avatar' })
