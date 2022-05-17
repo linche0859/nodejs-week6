@@ -1,5 +1,6 @@
 const validator = require('validator');
 const User = require('../models/user');
+const Track = require('../models/track');
 const { getHttpResponseContent } = require('../services/response');
 const {
   appError,
@@ -10,9 +11,31 @@ const { getJWT } = require('../services/auth');
 const {
   getEncryptedPassword,
   isValidPassword,
+  isValidObjectId,
 } = require('../services/validation');
 
 const user = {
+  // 取得會員資訊
+  profile: asyncHandleError(async (req, res, next) => {
+    res.status(200).json(getHttpResponseContent(req.user));
+  }),
+  // 取得特定的會員資訊
+  getUserProfile: asyncHandleError(async (req, res, next) => {
+    const {
+      params: { userId },
+    } = req;
+    if (!(userId && isValidObjectId(userId)))
+      return next(appError(400, '請傳入特定的會員'));
+
+    const existedUser = await User.findById(userId);
+    if (!existedUser) return next(appError(400, '尚未註冊為會員'));
+
+    const tracking = await Track.find({ tracking: userId }).count();
+
+    res
+      .status(200)
+      .json(getHttpResponseContent({ ...existedUser._doc, tracking }));
+  }),
   // 註冊會員
   signUp: asyncHandleError(async (req, res, next) => {
     const {
@@ -60,10 +83,6 @@ const user = {
     if (!isValid) return next(appError(400, '帳號或密碼錯誤，請重新輸入！'));
 
     res.status(201).json(getHttpResponseContent({ token: getJWT(user) }));
-  }),
-  // 取得會員資訊
-  profile: asyncHandleError(async (req, res, next) => {
-    res.status(200).json(getHttpResponseContent(req.user));
   }),
   // 更新會員資訊
   updateProfile: asyncHandleError(async (req, res, next) => {

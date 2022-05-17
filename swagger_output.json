@@ -153,6 +153,69 @@
         }
       }
     },
+    "/user/{userId}/profile": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "取得特定的會員資訊",
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "會員編號"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "JSON Web Token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Authorization": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "Authorization"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "取得會員資訊成功",
+            "schema": {
+              "$ref": "#/definitions/SpecificUser"
+            }
+          },
+          "401": {
+            "description": "登入會員失敗",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "您尚未登入"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/user/sign_up": {
       "post": {
         "tags": [
@@ -1049,6 +1112,31 @@
         "gender": {
           "type": "string",
           "example": "male"
+        }
+      }
+    },
+    "SpecificUser": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "123456789"
+        },
+        "name": {
+          "type": "string",
+          "example": "會員暱稱"
+        },
+        "avatar": {
+          "type": "string",
+          "example": "https://..."
+        },
+        "gender": {
+          "type": "string",
+          "example": "male"
+        },
+        "tracking": {
+          "type": "number",
+          "example": 0
         }
       }
     },

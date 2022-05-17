@@ -49,6 +49,13 @@ const doc = {
       avatar: 'https://...',
       gender: 'male',
     },
+    SpecificUser: {
+      _id: '123456789',
+      name: '會員暱稱',
+      avatar: 'https://...',
+      gender: 'male',
+      tracking: 0,
+    },
     Messages: {
       _id: '123456789',
       user: {

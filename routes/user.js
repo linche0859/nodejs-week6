@@ -34,6 +34,40 @@ router.get('/user/profile', auth, (req, res, next) =>
   */
   UserController.profile(req, res, next)
 );
+router.get('/user/:userId/profile', auth, (req, res, next) =>
+  /**
+   * #swagger.tags = ['Users']
+   * #swagger.summary = '取得特定的會員資訊'
+   * #swagger.security = [{
+      "apiKeyAuth": [] 
+    }]
+   */
+  /**
+    #swagger.parameters['Authorization'] = {
+      in: 'header',
+      description: 'JSON Web Token',
+      schema: {
+        $Authorization: '',
+      }
+    }
+    #swagger.parameters['userId'] = {
+      description: '會員編號',
+    }
+   */
+  /**
+    #swagger.responses[200] = {
+      description: '取得會員資訊成功',
+      schema: { $ref: '#/definitions/SpecificUser' }
+    }
+    #swagger.responses[401] = {
+      description: '登入會員失敗',
+      schema: {
+        message: '您尚未登入'
+      }
+    }
+  */
+  UserController.getUserProfile(req, res, next)
+);
 router.post('/user/sign_up', (req, res, next) =>
   /**
    * #swagger.tags = ['Users']
