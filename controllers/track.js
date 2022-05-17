@@ -24,6 +24,8 @@ const track = {
     } = req;
     if (!(userId && isValidObjectId(userId)))
       return next(appError(400, '請傳入特定的追蹤會員'));
+    if (userId === user._id.toString())
+      return next(appError(400, '無法追蹤自己'));
 
     const existedUser = await User.findById(userId);
     if (!existedUser) return next(appError(400, '追蹤的會員尚未註冊為會員'));
