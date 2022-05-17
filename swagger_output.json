@@ -193,19 +193,73 @@
               "$ref": "#/definitions/SpecificUser"
             }
           },
-          "401": {
+          "400": {
             "description": "登入會員失敗",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/user/{userId}/check": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "驗證是否為有效的會員",
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "會員編號"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "JSON Web Token",
             "schema": {
               "type": "object",
               "properties": {
-                "message": {
+                "Authorization": {
                   "type": "string",
-                  "example": "您尚未登入"
+                  "example": ""
+                }
+              },
+              "required": [
+                "Authorization"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "驗證成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "example": "OK"
                 }
               },
               "xml": {
                 "name": "main"
               }
+            }
+          },
+          "400": {
+            "description": "驗證失敗",
+            "schema": {
+              "$ref": "#/definitions/Error"
             }
           }
         },

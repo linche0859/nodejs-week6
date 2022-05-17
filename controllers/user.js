@@ -36,6 +36,19 @@ const user = {
       .status(200)
       .json(getHttpResponseContent({ ...existedUser._doc, tracking }));
   }),
+  // 驗證是否為有效的會員
+  checkUser: asyncHandleError(async (req, res, next) => {
+    const {
+      params: { userId },
+    } = req;
+    if (!(userId && isValidObjectId(userId)))
+      return next(appError(400, '請傳入特定的會員'));
+
+    const existedUser = await User.findById(userId);
+    if (!existedUser) return next(appError(400, '尚未註冊為會員'));
+
+    res.status(200).json(getHttpResponseContent('OK'));
+  }),
   // 註冊會員
   signUp: asyncHandleError(async (req, res, next) => {
     const {

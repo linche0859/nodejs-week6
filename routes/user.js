@@ -59,14 +59,44 @@ router.get('/user/:userId/profile', auth, (req, res, next) =>
       description: '取得會員資訊成功',
       schema: { $ref: '#/definitions/SpecificUser' }
     }
-    #swagger.responses[401] = {
+    #swagger.responses[400] = {
       description: '登入會員失敗',
-      schema: {
-        message: '您尚未登入'
-      }
+      schema: { $ref: '#/definitions/Error' }
     }
   */
   UserController.getUserProfile(req, res, next)
+);
+router.get('/user/:userId/check', auth, (req, res, next) =>
+  /**
+   * #swagger.tags = ['Users']
+   * #swagger.summary = '驗證是否為有效的會員'
+   * #swagger.security = [{
+      "apiKeyAuth": [] 
+    }]
+   */
+  /**
+    #swagger.parameters['Authorization'] = {
+      in: 'header',
+      description: 'JSON Web Token',
+      schema: {
+        $Authorization: '',
+      }
+    }
+    #swagger.parameters['userId'] = {
+      description: '會員編號',
+    }
+   */
+  /**
+    #swagger.responses[200] = {
+      description: '驗證成功',
+      schema: { data: 'OK' }
+    }
+    #swagger.responses[400] = {
+      description: '驗證失敗',
+      schema: { $ref: '#/definitions/Error' }
+    }
+  */
+  UserController.checkUser(req, res, next)
 );
 router.post('/user/sign_up', (req, res, next) =>
   /**
