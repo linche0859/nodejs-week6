@@ -11,10 +11,11 @@ const file = {
     if (file.size > 2 * 1024 * 1024)
       return next(appError(400, '檔案大小僅限 2MB 以下'));
 
-    const buffer = await sharp(req.file.buffer)
+    const buffer = await sharp(file.buffer)
       .resize({ width: 120, height: 120 })
       .png()
       .toBuffer();
+
     const link = await uploadImgur(buffer);
     res.status(201).json(getHttpResponseContent(link));
   }),
@@ -25,7 +26,7 @@ const file = {
     if (file.size > 2 * 1024 * 1024)
       return next(appError(400, '檔案大小僅限 2MB 以下'));
 
-    const buffer = await sharp(req.file.buffer).png().toBuffer();
+    const buffer = await sharp(file.buffer).png().toBuffer();
     const link = await uploadImgur(buffer);
     res.status(201).json(getHttpResponseContent(link));
   }),
