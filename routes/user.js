@@ -178,6 +178,7 @@ router.patch('/user/profile', auth, (req, res, next) =>
       schema: {
         $name: '兩金勘吉',
         $gender: 'female',
+        avatar: 'https://i.imgur.com/xxx.png'
       }
     }
    */

@@ -101,9 +101,11 @@ const user = {
   updateProfile: asyncHandleError(async (req, res, next) => {
     const {
       user,
-      body: { name, gender },
+      body: { name, gender, avatar },
     } = req;
     if (!(name && gender)) return next(appError(400, '請填寫修改資訊'));
+    if (avatar && !validator.isURL(avatar, { protocols: ['https'] }))
+      return next(validationError(400, 'avatar', '頭像路徑錯誤，請重新上傳'));
     if (!validator.isLength(name, { min: 2 }))
       return next(validationError(400, 'name', '暱稱至少 2 個字元以上'));
     if (!['male', 'female'].includes(gender))
@@ -111,8 +113,9 @@ const user = {
     const currentUser = await User.findByIdAndUpdate(user._id, {
       name,
       gender,
+      avatar,
     });
-    Object.assign(currentUser, { name, gender });
+    Object.assign(currentUser, { name, gender, avatar });
     res.status(201).json(getHttpResponseContent(currentUser));
   }),
   // 更新會員密碼

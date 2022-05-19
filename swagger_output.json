@@ -132,6 +132,10 @@
                 "gender": {
                   "type": "string",
                   "example": "female"
+                },
+                "avatar": {
+                  "type": "string",
+                  "example": "https://i.imgur.com/xxx.png"
                 }
               },
               "required": [
@@ -1225,7 +1229,7 @@
         },
         "image": {
           "type": "string",
-          "example": "https://...."
+          "example": "https://i.imgur.com/xxx.png."
         },
         "user": {
           "type": "object",
@@ -1240,7 +1244,7 @@
             },
             "avatar": {
               "type": "string",
-              "example": "https://..."
+              "example": "https://i.imgur.com/xxx.png"
             }
           }
         },
@@ -1275,7 +1279,7 @@
                   },
                   "avatar": {
                     "type": "string",
-                    "example": "https://..."
+                    "example": "https://i.imgur.com/xxx.png"
                   }
                 }
               },
@@ -1310,7 +1314,7 @@
               },
               "image": {
                 "type": "string",
-                "example": "https://...."
+                "example": "https://i.imgur.com/xxx.png."
               },
               "user": {
                 "type": "object",
@@ -1325,7 +1329,7 @@
                   },
                   "avatar": {
                     "type": "string",
-                    "example": "https://..."
+                    "example": "https://i.imgur.com/xxx.png"
                   }
                 }
               },
@@ -1360,7 +1364,7 @@
                         },
                         "avatar": {
                           "type": "string",
-                          "example": "https://..."
+                          "example": "https://i.imgur.com/xxx.png"
                         }
                       }
                     },
@@ -1418,7 +1422,7 @@
         },
         "avatar": {
           "type": "string",
-          "example": "https://..."
+          "example": "https://i.imgur.com/xxx.png"
         },
         "gender": {
           "type": "string",
@@ -1439,7 +1443,7 @@
         },
         "avatar": {
           "type": "string",
-          "example": "https://..."
+          "example": "https://i.imgur.com/xxx.png"
         },
         "gender": {
           "type": "string",
@@ -1471,7 +1475,7 @@
             },
             "avatar": {
               "type": "string",
-              "example": "https://..."
+              "example": "https://i.imgur.com/xxx.png"
             }
           }
         },
@@ -1505,7 +1509,7 @@
             },
             "avatar": {
               "type": "string",
-              "example": "https://..."
+              "example": "https://i.imgur.com/xxx.png"
             }
           }
         },

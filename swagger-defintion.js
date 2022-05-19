@@ -7,12 +7,12 @@ const page = {
 const user = {
   _id: '123456789',
   name: '會員暱稱',
-  avatar: 'https://...',
+  avatar: 'https://i.imgur.com/xxx.png',
 };
 
 const Post = {
   content: '來新增一筆資料吧',
-  image: 'https://....',
+  image: 'https://i.imgur.com/xxx.png.',
   user,
   likes: ['123456789'],
   messages: [
