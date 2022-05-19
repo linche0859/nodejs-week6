@@ -131,9 +131,8 @@ const post = {
     } = req;
     if (!content)
       return next(validationError(400, 'content', '請填寫貼文內容'));
-
-    if (image && !image.startsWith('https'))
-      return next(validationError(400, 'image', '貼文圖片網址錯誤'));
+    if (image && !validator.isURL(image, { protocols: ['https'] }))
+      return next(validationError(400, 'image', '圖片路徑錯誤，請重新上傳'));
     const post = await Post.create({ content, image, user: user._id });
 
     res.status(201).json(getHttpResponseContent(post));
