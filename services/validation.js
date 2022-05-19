@@ -32,8 +32,16 @@ const isValidPassword = async (password, comparedPassword) => {
  */
 const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
 
+/**
+ * 是否為大於 0 的正整數
+ * @param {number|string} value 數值
+ * @returns {boolean}
+ */
+const isPositiveInteger = (value) => !isNaN(value) && parseInt(value) > 0;
+
 module.exports = {
   getEncryptedPassword,
   isValidPassword,
   isValidObjectId,
+  isPositiveInteger,
 };

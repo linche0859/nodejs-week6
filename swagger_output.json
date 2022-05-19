@@ -65,7 +65,7 @@
           "200": {
             "description": "取得會員資訊成功",
             "schema": {
-              "$ref": "#/definitions/Users"
+              "$ref": "#/definitions/User"
             }
           },
           "401": {
@@ -141,7 +141,7 @@
           "201": {
             "description": "更新會員資訊成功",
             "schema": {
-              "$ref": "#/definitions/Users"
+              "$ref": "#/definitions/User"
             }
           },
           "400": {
@@ -496,19 +496,25 @@
             "in": "query",
             "description": "排序方式，desc 為新至舊，asc 為舊至新",
             "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "頁碼",
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "頁筆數",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "取得貼文成功",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Posts"
-              },
-              "xml": {
-                "name": "main"
-              }
+              "$ref": "#/definitions/Posts"
             }
           }
         },
@@ -551,7 +557,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Posts"
+                "$ref": "#/definitions/Post"
               },
               "xml": {
                 "name": "main"
@@ -609,19 +615,25 @@
             "in": "query",
             "description": "排序方式，desc 為新至舊，asc 為舊至新",
             "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "頁碼",
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "頁筆數",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "取得個人的貼文成功",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Posts"
-              },
-              "xml": {
-                "name": "main"
-              }
+              "$ref": "#/definitions/Posts"
             }
           }
         },
@@ -683,7 +695,7 @@
           "201": {
             "description": "新增貼文成功",
             "schema": {
-              "$ref": "#/definitions/Posts"
+              "$ref": "#/definitions/Post"
             }
           },
           "400": {
@@ -754,7 +766,7 @@
           "201": {
             "description": "新增貼文留言成功",
             "schema": {
-              "$ref": "#/definitions/Messages"
+              "$ref": "#/definitions/Message"
             }
           },
           "400": {
@@ -927,7 +939,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Tracks"
+                "$ref": "#/definitions/Track"
               },
               "xml": {
                 "name": "main"
@@ -1068,7 +1080,7 @@
     }
   },
   "definitions": {
-    "Posts": {
+    "Post": {
       "type": "object",
       "properties": {
         "content": {
@@ -1088,11 +1100,11 @@
             },
             "name": {
               "type": "string",
-              "example": "小明"
+              "example": "會員暱稱"
             },
             "avatar": {
               "type": "string",
-              "example": "https://...."
+              "example": "https://..."
             }
           }
         },
@@ -1148,7 +1160,116 @@
         }
       }
     },
-    "Users": {
+    "Posts": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "string",
+                "example": "來新增一筆資料吧"
+              },
+              "image": {
+                "type": "string",
+                "example": "https://...."
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "example": "123456789"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "會員暱稱"
+                  },
+                  "avatar": {
+                    "type": "string",
+                    "example": "https://..."
+                  }
+                }
+              },
+              "likes": {
+                "type": "array",
+                "example": [
+                  "123456789"
+                ],
+                "items": {
+                  "type": "string"
+                }
+              },
+              "messages": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "123456789"
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "123456789"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "會員暱稱"
+                        },
+                        "avatar": {
+                          "type": "string",
+                          "example": "https://..."
+                        }
+                      }
+                    },
+                    "content": {
+                      "type": "string",
+                      "example": "一則留言"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "example": "2022-01-01T00:00:00.000Z"
+                    }
+                  }
+                }
+              },
+              "createdAt": {
+                "type": "string",
+                "example": "2022-05-03T09:00:00.226Z"
+              }
+            }
+          }
+        },
+        "meta": {
+          "type": "object",
+          "properties": {
+            "currentPage": {
+              "type": "number",
+              "example": 1
+            },
+            "lastPage": {
+              "type": "number",
+              "example": 1
+            },
+            "perPage": {
+              "type": "number",
+              "example": 10
+            },
+            "total": {
+              "type": "number",
+              "example": 2
+            }
+          }
+        }
+      }
+    },
+    "User": {
       "type": "object",
       "properties": {
         "_id": {
@@ -1194,7 +1315,7 @@
         }
       }
     },
-    "Messages": {
+    "Message": {
       "type": "object",
       "properties": {
         "_id": {
@@ -1228,7 +1349,7 @@
         }
       }
     },
-    "Tracks": {
+    "Track": {
       "type": "object",
       "properties": {
         "_id": {

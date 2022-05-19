@@ -275,7 +275,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{API_URL}}/posts?sort=desc&q=",
+							"raw": "{{API_URL}}/posts?sort=desc&q=&page=1&limit=10",
 							"host": [
 								"{{API_URL}}"
 							],
@@ -290,6 +290,14 @@
 								{
 									"key": "q",
 									"value": ""
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
 								}
 							]
 						}
@@ -340,13 +348,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{API_URL}}/posts/user?sort=desc&q=",
+							"raw": "{{API_URL}}/posts/6280a615019f8e3c4cd9884b?sort=desc&q=&page=1&limit=10",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"posts",
-								"user"
+								"6280a615019f8e3c4cd9884b"
 							],
 							"query": [
 								{
@@ -356,6 +364,14 @@
 								{
 									"key": "q",
 									"value": ""
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
 								}
 							]
 						}

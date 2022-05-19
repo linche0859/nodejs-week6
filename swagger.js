@@ -3,9 +3,10 @@ require('dotenv').config();
 
 const host =
   process.env.NODE_ENV === 'production'
-    ? process.env.SWAGGER_BASE || 'localhost:3000'
-    : 'localhost:3000';
+    ? process.env.SWAGGER_BASE || 'http://localhost:3000'
+    : 'http://localhost:3000';
 const schemes = process.env.NODE_ENV === 'production' ? ['https'] : ['http'];
+const definitions = require('./swagger-defintion');
 
 const doc = {
   info: {
@@ -19,68 +20,7 @@ const doc = {
     { name: 'Users', description: '會員相關' },
     { name: 'Tracks', description: '追蹤相關' },
   ],
-  definitions: {
-    Posts: {
-      content: '來新增一筆資料吧',
-      image: 'https://....',
-      user: {
-        _id: '123456789',
-        name: '小明',
-        avatar: 'https://....',
-      },
-      likes: ['123456789'],
-      messages: [
-        {
-          _id: '123456789',
-          user: {
-            _id: '123456789',
-            name: '會員暱稱',
-            avatar: 'https://...',
-          },
-          content: '一則留言',
-          createdAt: '2022-01-01T00:00:00.000Z',
-        },
-      ],
-      createdAt: '2022-05-03T09:00:00.226Z',
-    },
-    Users: {
-      _id: '123456789',
-      name: '會員暱稱',
-      avatar: 'https://...',
-      gender: 'male',
-    },
-    SpecificUser: {
-      _id: '123456789',
-      name: '會員暱稱',
-      avatar: 'https://...',
-      gender: 'male',
-      tracking: 0,
-    },
-    Messages: {
-      _id: '123456789',
-      user: {
-        _id: '123456789',
-        name: '會員暱稱',
-        avatar: 'https://...',
-      },
-      content: '一則留言',
-      createdAt: '2022-01-01T00:00:00.000Z',
-    },
-    Tracks: {
-      _id: '123456789',
-      tracking: {
-        _id: '123456789',
-        name: '會員暱稱',
-        avatar: 'https://...',
-      },
-      createdAt: '2022-01-01T00:00:00.000Z',
-    },
-    Error: {
-      message: {
-        field: '錯誤訊息',
-      },
-    },
-  },
+  definitions,
   securityDefinitions: {
     apiKeyAuth: {
       type: 'apiKey',

@@ -7,16 +7,32 @@ const {
   validationError,
   asyncHandleError,
 } = require('../services/error');
-const { isValidObjectId } = require('../services/validation');
+const {
+  isValidObjectId,
+  isPositiveInteger,
+} = require('../services/validation');
 
 const post = {
   // 取得貼文
   getPosts: asyncHandleError(async (req, res, next) => {
-    const {
-      query: { q, sort = 'desc' },
+    let {
+      query: { q, sort = 'desc', page = 1, limit = 10 },
     } = req;
+    if (!isPositiveInteger(page))
+      return next(appError(400, '請傳入正確的查詢頁數'));
+    if (!isPositiveInteger(limit))
+      return next(appError(400, '請傳入正確的查詢頁筆數'));
+
+    page = parseInt(page);
+    limit = parseInt(limit);
     const filter = q ? { content: new RegExp(q, 'i') } : {};
+    const total = await Post.find(filter).count();
+    const totalPage = Math.ceil(total / limit);
+    if (page > totalPage) return next(appError(400, '請傳入正確的查詢頁筆數'));
+
     const posts = await Post.find(filter)
+      .skip((page - 1) * limit)
+      .limit(limit)
       .populate({ path: 'user', select: 'name avatar' })
       .populate({
         path: 'messages',
@@ -29,7 +45,17 @@ const post = {
       .sort({
         createdAt: sort === 'desc' ? -1 : 1,
       });
-    res.status(200).json(getHttpResponseContent(posts));
+    res.status(200).json(
+      getHttpResponseContent({
+        data: posts,
+        meta: {
+          currentPage: page,
+          lastPage: totalPage,
+          perPage: limit,
+          total,
+        },
+      })
+    );
   }),
   // 取得按讚的貼文
   getLikePosts: asyncHandleError(async (req, res, next) => {
@@ -44,19 +70,33 @@ const post = {
   }),
   // 取得個人的貼文
   getUserPosts: asyncHandleError(async (req, res, next) => {
-    const {
+    let {
       params: { userId },
-      query: { q, sort = 'desc' },
+      query: { q, sort = 'desc', page = 1, limit = 10 },
     } = req;
     if (!(userId && isValidObjectId(userId)))
       return next(appError(400, '請傳入特定的會員'));
+    if (!isPositiveInteger(page))
+      return next(appError(400, '請傳入正確的查詢頁數'));
+    if (!isPositiveInteger(limit))
+      return next(appError(400, '請傳入正確的查詢頁筆數'));
 
     const existedUser = await User.findById(userId);
     if (!existedUser) return next(appError(400, '尚未註冊為會員'));
 
+    page = parseInt(page);
+    limit = parseInt(limit);
+
     const filter = { user: userId };
     if (q) filter.content = new RegExp(q, 'i');
+
+    const total = await Post.find(filter).count();
+    const totalPage = Math.ceil(total / limit);
+    if (page > totalPage) return next(appError(400, '請傳入正確的查詢頁筆數'));
+
     const posts = await Post.find(filter)
+      .skip((page - 1) * limit)
+      .limit(limit)
       .populate({ path: 'user', select: 'name avatar' })
       .populate({
         path: 'messages',
@@ -69,7 +109,17 @@ const post = {
       .sort({
         createdAt: sort === 'desc' ? -1 : 1,
       });
-    res.status(200).json(getHttpResponseContent(posts));
+    res.status(200).json(
+      getHttpResponseContent({
+        data: posts,
+        meta: {
+          currentPage: page,
+          lastPage: totalPage,
+          perPage: limit,
+          total,
+        },
+      })
+    );
   }),
   // 新增貼文
   postOnePost: asyncHandleError(async (req, res, next) => {

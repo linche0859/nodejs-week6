@@ -23,7 +23,7 @@ router.get('/tracks', auth, (req, res, next) =>
   /**
     #swagger.responses[200] = {
       description: '取得追蹤名單成功',
-      schema: [{ $ref: '#/definitions/Tracks' }]
+      schema: [{ $ref: '#/definitions/Track' }]
     }
    */
   TrackController.getTracks(req, res, next)

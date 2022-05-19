@@ -29,11 +29,21 @@ router.get('/posts', auth, (req, res, next) =>
       description: '排序方式，desc 為新至舊，asc 為舊至新',
       type: 'string',
     }
+    #swagger.parameters['page'] = {
+      in: 'query',
+      description: '頁碼',
+      type: 'string',
+    }
+    #swagger.parameters['limit'] = {
+      in: 'query',
+      description: '頁筆數',
+      type: 'string',
+    }
    */
   /**
     #swagger.responses[200] = {
       description: '取得貼文成功',
-      schema: [{ $ref: '#/definitions/Posts' }]
+      schema: { $ref: '#/definitions/Posts' }
     }
    */
   PostController.getPosts(req, res, next)
@@ -58,7 +68,7 @@ router.get('/posts/like', auth, (req, res, next) =>
   /**
     #swagger.responses[200] = {
       description: '取得按讚的貼文成功',
-      schema: [{ $ref: '#/definitions/Posts' }]
+      schema: [{ $ref: '#/definitions/Post' }]
     }
    */
   PostController.getLikePosts(req, res, next)
@@ -92,11 +102,21 @@ router.get('/posts/:userId', auth, (req, res, next) =>
       description: '排序方式，desc 為新至舊，asc 為舊至新',
       type: 'string',
     }
+    #swagger.parameters['page'] = {
+      in: 'query',
+      description: '頁碼',
+      type: 'string',
+    }
+    #swagger.parameters['limit'] = {
+      in: 'query',
+      description: '頁筆數',
+      type: 'string',
+    }
    */
   /**
     #swagger.responses[200] = {
       description: '取得個人的貼文成功',
-      schema: [{ $ref: '#/definitions/Posts' }]
+      schema: { $ref: '#/definitions/Posts' }
     }
    */
   PostController.getUserPosts(req, res, next)
@@ -129,7 +149,7 @@ router.post('/post', auth, (req, res, next) =>
   /**
     #swagger.responses[201] = {
       description: '新增貼文成功',
-      schema: { $ref: '#/definitions/Posts' }
+      schema: { $ref: '#/definitions/Post' }
     }
     #swagger.responses[400] = {
       description: '新增貼文失敗',
@@ -168,7 +188,7 @@ router.post('/post/:postId/message', auth, (req, res, next) =>
   /**
     #swagger.responses[201] = {
       description: '新增貼文留言成功',
-      schema: { $ref: '#/definitions/Messages' }
+      schema: { $ref: '#/definitions/Message' }
     }
     #swagger.responses[400] = {
       description: '新增貼文留言失敗',

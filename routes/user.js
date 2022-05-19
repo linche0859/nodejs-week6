@@ -23,7 +23,7 @@ router.get('/user/profile', auth, (req, res, next) =>
   /**
     #swagger.responses[200] = {
       description: '取得會員資訊成功',
-      schema: { $ref: '#/definitions/Users' }
+      schema: { $ref: '#/definitions/User' }
     }
     #swagger.responses[401] = {
       description: '登入會員失敗',
@@ -184,7 +184,7 @@ router.patch('/user/profile', auth, (req, res, next) =>
   /**
     #swagger.responses[201] = {
       description: '更新會員資訊成功',
-      schema: { $ref: '#/definitions/Users' }
+      schema: { $ref: '#/definitions/User' }
     }
     #swagger.responses[400] = {
       description: '更新會員資訊失敗',
