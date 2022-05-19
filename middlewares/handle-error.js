@@ -54,7 +54,8 @@ const handleProdError = (err, res) => {
 const handleError = (err, req, res, next) => {
   const isJsonWebTokenError = err.name === 'JsonWebTokenError';
   const isValidationError = err.name === 'ValidationError';
-  const isParseError = err.type === 'entity.parse.failed';
+  const isSyntaxError =
+    err instanceof SyntaxError && err.status === 400 && 'body' in err;
   err.statusCode = err.statusCode || 500;
 
   // jwt error
@@ -64,10 +65,10 @@ const handleError = (err, req, res, next) => {
     err.isOperational = true;
   }
   // validation error
-  else if (isValidationError || isParseError) {
+  else if (isValidationError || isSyntaxError) {
     err.statusCode = 400;
-    err.message = isParseError
-      ? errorMsg.validation
+    err.message = isSyntaxError
+      ? errorMsg.syntax
       : err.message || errorMsg.validation;
     err.isValidationError = true;
     err.isOperational = true;
