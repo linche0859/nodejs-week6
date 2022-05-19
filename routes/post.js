@@ -73,7 +73,7 @@ router.get('/posts/like', auth, (req, res, next) =>
    */
   PostController.getLikePosts(req, res, next)
 );
-router.get('/posts/:userId', auth, (req, res, next) =>
+router.get('/posts/:userId/user', auth, (req, res, next) =>
   /**
    * #swagger.tags = ['Posts']
    * #swagger.summary = '取得個人的貼文'

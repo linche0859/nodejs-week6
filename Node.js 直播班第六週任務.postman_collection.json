@@ -348,13 +348,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{API_URL}}/posts/6280a615019f8e3c4cd9884b?sort=desc&q=&page=1&limit=10",
+							"raw": "{{API_URL}}/posts/6280a615019f8e3c4cd9884b/user?sort=desc&q=&page=1&limit=10",
 							"host": [
 								"{{API_URL}}"
 							],
 							"path": [
 								"posts",
-								"6280a615019f8e3c4cd9884b"
+								"6280a615019f8e3c4cd9884b",
+								"user"
 							],
 							"query": [
 								{
