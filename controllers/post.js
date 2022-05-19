@@ -1,3 +1,4 @@
+const validator = require('validator');
 const Post = require('../models/post');
 const Message = require('../models/message');
 const User = require('../models/user');
