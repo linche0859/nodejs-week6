@@ -28,7 +28,8 @@ const post = {
     const filter = q ? { content: new RegExp(q, 'i') } : {};
     const total = await Post.find(filter).count();
     const totalPage = Math.ceil(total / limit);
-    if (page > totalPage) return next(appError(400, '請傳入正確的查詢頁筆數'));
+    if (totalPage > 0 && page > totalPage)
+      return next(appError(400, '請傳入正確的查詢頁數'));
 
     const posts = await Post.find(filter)
       .skip((page - 1) * limit)
@@ -92,7 +93,8 @@ const post = {
 
     const total = await Post.find(filter).count();
     const totalPage = Math.ceil(total / limit);
-    if (page > totalPage) return next(appError(400, '請傳入正確的查詢頁筆數'));
+    if (totalPage > 0 && page > totalPage)
+      return next(appError(400, '請傳入正確的查詢頁數'));
 
     const posts = await Post.find(filter)
       .skip((page - 1) * limit)
