@@ -19,6 +19,10 @@
     {
       "name": "Tracks",
       "description": "追蹤相關"
+    },
+    {
+      "name": "Files",
+      "description": "上傳檔案相關"
     }
   ],
   "schemes": [
@@ -1066,6 +1070,138 @@
           },
           "400": {
             "description": "取消追蹤失敗",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/file/avatar": {
+      "post": {
+        "tags": [
+          "Files"
+        ],
+        "summary": "上傳會員頭像",
+        "description": "",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "JSON Web Token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Authorization": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "Authorization"
+              ]
+            }
+          },
+          {
+            "name": "image",
+            "in": "formData",
+            "type": "file",
+            "required": "true",
+            "description": "圖片檔案"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "上傳成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "example": "https://i.imgur.com/xxx.png"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "上傳失敗",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/file/image": {
+      "post": {
+        "tags": [
+          "Files"
+        ],
+        "summary": "上傳圖片",
+        "description": "",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "JSON Web Token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Authorization": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "Authorization"
+              ]
+            }
+          },
+          {
+            "name": "image",
+            "in": "formData",
+            "type": "file",
+            "required": "true",
+            "description": "圖片檔案"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "上傳成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "example": "https://i.imgur.com/xxx.png"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "上傳失敗",
             "schema": {
               "$ref": "#/definitions/Error"
             }
