@@ -110,12 +110,13 @@ const user = {
       return next(validationError(400, 'name', '暱稱至少 2 個字元以上'));
     if (!['male', 'female'].includes(gender))
       return next(validationError(400, 'gender', '性別需填寫男性或女性'));
-    const currentUser = await User.findByIdAndUpdate(user._id, {
-      name,
-      gender,
-      avatar,
-    });
-    Object.assign(currentUser, { name, gender, avatar });
+
+    const payload = { name, gender };
+    if (avatar) payload.avatar = avatar;
+    const currentUser = await User.findByIdAndUpdate(user._id, payload);
+
+    Object.assign(currentUser, { name, gender });
+    if (avatar) currentUser.avatar = avatar;
     res.status(201).json(getHttpResponseContent(currentUser));
   }),
   // 更新會員密碼

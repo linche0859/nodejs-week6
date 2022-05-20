@@ -134,7 +134,10 @@ const post = {
       return next(validationError(400, 'content', '請填寫貼文內容'));
     if (image && !validator.isURL(image, { protocols: ['https'] }))
       return next(validationError(400, 'image', '圖片路徑錯誤，請重新上傳'));
-    const post = await Post.create({ content, image, user: user._id });
+
+    const payload = { content, user: user._id };
+    if (image) payload.image = image;
+    const post = await Post.create(payload);
 
     res.status(201).json(getHttpResponseContent(post));
   }),
