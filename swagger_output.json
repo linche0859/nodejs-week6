@@ -915,6 +915,132 @@
         ]
       }
     },
+    "/post/{postId}": {
+      "delete": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "刪除特定的貼文",
+        "description": "",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "貼文編號"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "JSON Web Token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Authorization": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "Authorization"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "刪除貼文成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "example": "刪除貼文成功"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "刪除貼文失敗",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/post/{messageId}/message": {
+      "delete": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "刪除特定的留言",
+        "description": "",
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "留言編號"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "JSON Web Token",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Authorization": {
+                  "type": "string",
+                  "example": ""
+                }
+              },
+              "required": [
+                "Authorization"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "刪除留言成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "example": "刪除留言成功"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "刪除留言失敗",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/tracks": {
       "get": {
         "tags": [

@@ -229,6 +229,40 @@ router.post('/post/:postId/like', auth, (req, res, next) =>
   */
   PostController.postLike(req, res, next)
 );
+router.delete('/post/:postId', auth, (req, res, next) =>
+  /**
+   * #swagger.tags = ['Posts']
+   * #swagger.summary = '刪除特定的貼文'
+   * #swagger.security = [{
+      "apiKeyAuth": [] 
+    }]
+   */
+  /**
+    #swagger.parameters['Authorization'] = {
+      in: 'header',
+      description: 'JSON Web Token',
+      schema: {
+        $Authorization: '',
+      }
+    }
+    #swagger.parameters['postId'] = { 
+      description: '貼文編號',
+    }
+  */
+  /**
+    #swagger.responses[201] = {
+      description: '刪除貼文成功',
+      schema: {
+        data: '刪除貼文成功'
+      }
+    }
+    #swagger.responses[400] = {
+      description: '刪除貼文失敗',
+      schema: { $ref: '#/definitions/Error' }
+    }
+  */
+  PostController.deletePost(req, res, next)
+);
 router.delete('/post/:postId/like', auth, (req, res, next) =>
   /**
    * #swagger.tags = ['Posts']
@@ -262,6 +296,40 @@ router.delete('/post/:postId/like', auth, (req, res, next) =>
     }
   */
   PostController.deleteLike(req, res, next)
+);
+router.delete('/post/:messageId/message', auth, (req, res, next) =>
+  /**
+   * #swagger.tags = ['Posts']
+   * #swagger.summary = '刪除特定的留言'
+   * #swagger.security = [{
+      "apiKeyAuth": [] 
+    }]
+   */
+  /**
+    #swagger.parameters['Authorization'] = {
+      in: 'header',
+      description: 'JSON Web Token',
+      schema: {
+        $Authorization: '',
+      }
+    }
+    #swagger.parameters['messageId'] = { 
+      description: '留言編號',
+    }
+  */
+  /**
+    #swagger.responses[201] = {
+      description: '刪除留言成功',
+      schema: {
+        data: '刪除留言成功'
+      }
+    }
+    #swagger.responses[400] = {
+      description: '刪除留言失敗',
+      schema: { $ref: '#/definitions/Error' }
+    }
+  */
+  PostController.deleteMessage(req, res, next)
 );
 
 module.exports = router;
