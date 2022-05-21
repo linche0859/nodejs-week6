@@ -10,9 +10,6 @@ const upload = multer({
     if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
       cb(appError(400, '檔案格式錯誤，僅限上傳 jpg、jpeg 與 png 格式'));
     }
-    if (file.size > fileSize) {
-      cb(appError(400, '檔案大小僅限 2MB 以下'));
-    }
     cb(null, true);
   },
 });

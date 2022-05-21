@@ -57,6 +57,7 @@ const handleError = (err, req, res, next) => {
   const isSyntaxError =
     err instanceof SyntaxError && err.status === 400 && 'body' in err;
   err.statusCode = err.statusCode || 500;
+  const isFileError = err.code === 'LIMIT_FILE_SIZE';
 
   // jwt error
   if (isJsonWebTokenError) {
@@ -71,6 +72,12 @@ const handleError = (err, req, res, next) => {
       ? errorMsg.syntax
       : err.message || errorMsg.validation;
     err.isValidationError = true;
+    err.isOperational = true;
+  }
+  // file error
+  else if (isFileError) {
+    err.statusCode = 400;
+    err.message = errorMsg.fileLimit;
     err.isOperational = true;
   }
   if (process.env.NODE_ENV === 'development') {
