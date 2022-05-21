@@ -1212,72 +1212,6 @@
         ]
       }
     },
-    "/file/avatar": {
-      "post": {
-        "tags": [
-          "Files"
-        ],
-        "summary": "上傳會員頭像",
-        "description": "",
-        "consumes": [
-          "multipart/form-data"
-        ],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "JSON Web Token",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "Authorization": {
-                  "type": "string",
-                  "example": ""
-                }
-              },
-              "required": [
-                "Authorization"
-              ]
-            }
-          },
-          {
-            "name": "image",
-            "in": "formData",
-            "type": "file",
-            "required": "true",
-            "description": "圖片檔案"
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "上傳成功",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "data": {
-                  "type": "string",
-                  "example": "https://i.imgur.com/xxx.png"
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
-          "400": {
-            "description": "上傳失敗",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
     "/file/image": {
       "post": {
         "tags": [
@@ -1305,6 +1239,12 @@
                 "Authorization"
               ]
             }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "上傳類型，avatar 為會員頭像，預設可以不填",
+            "type": "string"
           },
           {
             "name": "image",

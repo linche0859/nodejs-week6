@@ -1,31 +1,23 @@
 const sharp = require('sharp');
+const sizeOf = require('image-size');
 const { getHttpResponseContent } = require('../services/response');
 const { asyncHandleError, appError } = require('../services/error');
 const { uploadImgur } = require('../services/upload');
 
 const file = {
-  // 上傳會員頭像
-  postAvatar: asyncHandleError(async (req, res, next) => {
-    const { file } = req;
-    if (!file) return next(appError(400, '請選擇檔案'));
-    if (file.size > 2 * 1024 * 1024)
-      return next(appError(400, '檔案大小僅限 2MB 以下'));
-
-    const buffer = await sharp(file.buffer)
-      .resize({ width: 120, height: 120 })
-      .png()
-      .toBuffer();
-
-    const link = await uploadImgur(buffer);
-    res.status(201).json(getHttpResponseContent(link));
-  }),
   // 上傳圖片
   postImage: asyncHandleError(async (req, res, next) => {
-    const { file } = req;
+    const {
+      file,
+      query: { type },
+    } = req;
     if (!file) return next(appError(400, '請選擇檔案'));
-    if (file.size > 2 * 1024 * 1024)
-      return next(appError(400, '檔案大小僅限 2MB 以下'));
-
+    if (type === 'avatar') {
+      const dimensions = sizeOf(file.buffer);
+      if (dimensions.width !== dimensions.height) {
+        return next(appError(400, '圖片寬高比必需為 1:1，請重新輸入'));
+      }
+    }
     const buffer = await sharp(file.buffer).png().toBuffer();
     const link = await uploadImgur(buffer);
     res.status(201).json(getHttpResponseContent(link));

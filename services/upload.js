@@ -3,7 +3,7 @@ const { ImgurClient } = require('imgur');
 /**
  * 上傳圖片至 imgur
  * @param {buffer} buffer
- * @returns {string} imgur url
+ * @returns {promise} imgur url
  */
 const uploadImgur = async (buffer) => {
   const client = new ImgurClient({

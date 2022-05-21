@@ -2,7 +2,8 @@
 	"info": {
 		"_postman_id": "ca331f60-d76e-4ba1-8162-660ffc2e7886",
 		"name": "Node.js 直播班第六週任務",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5704810"
 	},
 	"item": [
 		{
@@ -95,80 +96,6 @@
 					"response": []
 				},
 				{
-					"name": "更新會員資訊",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{METAWALL_TOKEN}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"兩金勘吉\",\r\n  \"gender\": \"female\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{API_URL}}/user/profile",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"user",
-								"profile"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "更新會員密碼",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{METAWALL_TOKEN}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"password\": \"a1234567\",\r\n  \"confirm_password\": \"a1234567\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{API_URL}}/user/password",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"user",
-								"password"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "會員註冊",
 					"event": [
 						{
@@ -249,6 +176,80 @@
 							"path": [
 								"user",
 								"sign_in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新會員資訊",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{METAWALL_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"兩金勘吉\",\r\n  \"gender\": \"female\",\r\n  \"avatar\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/user/profile",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新會員密碼",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{METAWALL_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"password\": \"a1234567\",\r\n  \"confirm_password\": \"a1234567\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/user/password",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"user",
+								"password"
 							]
 						}
 					},
@@ -423,7 +424,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"content\": \"各位我有一個作戰計畫3\",\r\n    \"image\": \"https://....\"\r\n}",
+							"raw": "{\r\n    \"content\": \"各位我有一個作戰計畫\",\r\n    \"image\": \"https://....\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -556,6 +557,81 @@
 					"response": []
 				},
 				{
+					"name": "刪除特定的貼文",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{METAWALL_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/post/62809e3b84b3640ba08d0683",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"post",
+								"62809e3b84b3640ba08d0683"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "刪除特定的留言",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{METAWALL_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/post/6280b03c0f4a09e3424ce2d8/message",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"post",
+								"6280b03c0f4a09e3424ce2d8",
+								"message"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "移除貼文的按讚",
 					"request": {
 						"auth": {
@@ -588,43 +664,6 @@
 								"post",
 								"62809e3b84b3640ba08d0683",
 								"like"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "取消追蹤特定的會員",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{METAWALL_TOKEN}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{API_URL}}/track/627b1d3b592fa376495c8fd5",
-							"host": [
-								"{{API_URL}}"
-							],
-							"path": [
-								"track",
-								"627b1d3b592fa376495c8fd5"
 							]
 						}
 					},
@@ -713,6 +752,55 @@
 							"path": [
 								"track",
 								"627b1d3b592fa376495c8fd5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "檔案相關",
+			"item": [
+				{
+					"name": "上傳圖片",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{METAWALL_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/USER/Downloads/下載.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_URL}}/file/image?type=avatar",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"file",
+								"image"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "avatar"
+								}
 							]
 						}
 					},

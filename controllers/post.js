@@ -186,7 +186,7 @@ const post = {
     await Post.updateOne(
       { _id: postId },
       {
-        $push: { likes: user._id },
+        $addToSet: { likes: user._id },
       }
     );
     res.status(201).json(getHttpResponseContent('按讚貼文成功'));
